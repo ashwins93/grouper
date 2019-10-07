@@ -1,0 +1,29 @@
+{
+  "name": "grouper",
+  "version": "1.0.0",
+  "description": "A web app to group tabular data with indentation",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "build": "next buld",
+    "start": "next start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ashwins93/grouper.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ashwins93/grouper/issues"
+  },
+  "homepage": "https://github.com/ashwins93/grouper#readme",
+  "dependencies": {
+    "@material-ui/core": "^4.5.0",
+    "next": "^9.0.8",
+    "papaparse": "^5.1.0",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2"
+  }
+}

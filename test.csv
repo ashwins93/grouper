@@ -1,4 +1,5 @@
-1a,2a,3a
-1a,2a,3b
-1a,2b,3c
-1a,2b,3d
+Country,State,City
+USA,California,Los Angeles
+USA,California,San Francisco
+USA,Illinois,Chicago
+USA,Illinois,Springfield

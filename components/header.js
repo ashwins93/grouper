@@ -22,6 +22,15 @@ const styles = theme => ({
     maxWidth: '100%',
     objectFit: 'contain',
   },
+  arrowImg: {
+    display: 'block',
+    maxWidth: '100%',
+    objectFit: 'contain',
+    transform: 'rotate(90deg)',
+    [theme.breakpoints.up('md')]: {
+      transform: 'rotate(0deg)',
+    },
+  },
   imgWrapper: {
     overflow: 'hidden',
     maxWidth: 533,
@@ -77,7 +86,7 @@ const Header = ({ classes }) => {
             </Grid>
             <Grid item>
               <img
-                className={classes.tabularImg}
+                className={classes.arrowImg}
                 src="/static/arrow_right.svg"
                 alt=""
               />

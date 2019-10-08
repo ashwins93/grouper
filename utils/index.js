@@ -1,6 +1,7 @@
 export const indentData = (data, indentChar = '\t', depth = 0) => {
   let result = ''
   if (Array.isArray(data)) {
+    if (data.length === 1 && data[0] === '') return ''
     return data
       .map(val => indentChar.repeat(depth).concat(val))
       .join('\n')

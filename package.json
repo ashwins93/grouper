@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "next",
-    "build": "next buld",
-    "start": "next start"
+    "build": "next build",
+    "start": "next start",
+    "export": "next export"
   },
   "repository": {
     "type": "git",

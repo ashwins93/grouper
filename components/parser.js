@@ -9,6 +9,9 @@ import Switch from '@material-ui/core/Switch'
 import Checkbox from '@material-ui/core/Checkbox'
 import TextField from '@material-ui/core/TextField'
 import Fab from '@material-ui/core/Fab'
+import FilterNoneIcon from '@material-ui/icons/FilterNone'
+import CloudUploadIcon from '@material-ui/icons/CloudUpload'
+import FormatIndentIncreaseIcon from '@material-ui/icons/FormatIndentIncrease'
 import { parse } from 'papaparse'
 
 import { groupTabularData, indentData } from '../utils'
@@ -102,7 +105,7 @@ const Parser = ({ classes }) => {
   }
 
   return (
-    <Container style={{ padding: '32px 8px' }}>
+    <Container style={{ padding: '40px 8px' }}>
       <Grid
         container
         direction="column"
@@ -130,6 +133,7 @@ const Parser = ({ classes }) => {
               variant="contained"
               component="span"
               className={classes.uploadBtn}
+              startIcon={<CloudUploadIcon />}
             >
               Choose
             </Button>
@@ -207,7 +211,12 @@ const Parser = ({ classes }) => {
           </Typography>
         </Grid>
         <Grid item>
-          <Button variant="contained" color="primary" onClick={parseCSV}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={parseCSV}
+            startIcon={<FormatIndentIncreaseIcon />}
+          >
             Parse file
           </Button>
         </Grid>
@@ -239,6 +248,7 @@ const Parser = ({ classes }) => {
             className={classes.fab}
             onClick={copyToClipboard}
           >
+            <FilterNoneIcon style={{ marginRight: 10 }} />
             Copy text
           </Fab>
         </Grid>

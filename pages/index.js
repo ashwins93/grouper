@@ -26,19 +26,12 @@ const Index = () => {
   }
 
   return (
-    <div>
-      <Head>
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-        />
-      </Head>
-      <CssBaseline />
+    <>
       <Header />
       <input type="file" onChange={handleChange} />
       <button onClick={parseCSV}>Parse</button>
       <textarea value={display} readOnly />
-    </div>
+    </>
   )
 }
 

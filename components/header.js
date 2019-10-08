@@ -14,7 +14,8 @@ const styles = theme => ({
     padding: theme.spacing(3, 0),
   },
   cta: {
-    padding: theme.spacing(4, 0),
+    padding: theme.spacing(2, 0),
+    paddingBottom: theme.spacing(5),
   },
   tabularImg: {
     display: 'block',
@@ -27,7 +28,14 @@ const styles = theme => ({
     margin: '0 auto',
   },
   captionText: {
-    marginBottom: theme.spacing(5),
+    margin: theme.spacing(6, 0),
+  },
+  imgRow: {
+    flexWrap: 'wrap',
+    [theme.breakpoints.up('md')]: {
+      flexWrap: 'nowrap',
+    },
+    padding: theme.spacing(6, 0),
   },
 })
 
@@ -56,9 +64,9 @@ const Header = ({ classes }) => {
             justify="center"
             spacing={2}
             alignItems="center"
-            wrap={false}
+            className={classes.imgRow}
           >
-            <Grid item xs={12} md={5}>
+            <Grid item xs={12} md={'auto'}>
               <Paper elevation={4} className={classes.imgWrapper}>
                 <img
                   className={classes.tabularImg}
@@ -68,11 +76,13 @@ const Header = ({ classes }) => {
               </Paper>
             </Grid>
             <Grid item>
-              <Typography variant="h3" component="div">
-                &rarr;
-              </Typography>
+              <img
+                className={classes.tabularImg}
+                src="/static/arrow_right.svg"
+                alt=""
+              />
             </Grid>
-            <Grid item xs={12} md={5}>
+            <Grid item xs={12} md={'auto'}>
               <Paper elevation={4} className={classes.imgWrapper}>
                 <img
                   className={classes.tabularImg}

@@ -1,20 +1,20 @@
-import React, { useRef } from 'react'
-import { withStyles } from '@material-ui/core/styles'
-import Button from '@material-ui/core/Button'
-import Typography from '@material-ui/core/Typography'
-import Container from '@material-ui/core/Container'
-import Grid from '@material-ui/core/Grid'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Switch from '@material-ui/core/Switch'
-import Checkbox from '@material-ui/core/Checkbox'
-import TextField from '@material-ui/core/TextField'
-import Fab from '@material-ui/core/Fab'
-import FilterNoneIcon from '@material-ui/icons/FilterNone'
-import CloudUploadIcon from '@material-ui/icons/CloudUpload'
-import FormatIndentIncreaseIcon from '@material-ui/icons/FormatIndentIncrease'
-import { parse } from 'papaparse'
+import React, { useRef } from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
+import Checkbox from '@material-ui/core/Checkbox';
+import TextField from '@material-ui/core/TextField';
+import Fab from '@material-ui/core/Fab';
+import FilterNoneIcon from '@material-ui/icons/FilterNone';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import FormatIndentIncreaseIcon from '@material-ui/icons/FormatIndentIncrease';
+import { parse } from 'papaparse';
 
-import { groupTabularData, indentData } from '../utils'
+import { groupTabularData, indentData } from '../utils';
 
 const styles = theme => ({
   fileInput: {
@@ -50,59 +50,61 @@ const styles = theme => ({
     top: 50,
     right: 20,
   },
-})
+});
 
 const SectionHeading = ({ className, children }) => (
   <Typography className={className} variant="h5" component="h2" align="center">
     {children}
   </Typography>
-)
+);
 
 const Parser = ({ classes }) => {
-  const [file, setFile] = React.useState()
-  const [display, setDisplay] = React.useState('')
-  const [indentBySpaces, setIndent] = React.useState(false)
-  const [hasHeaders, setHeaders] = React.useState(false)
-  const [error, setError] = React.useState('')
-  const textRef = useRef()
+  const [file, setFile] = React.useState();
+  const [display, setDisplay] = React.useState('');
+  const [json, setJson] = React.useState('');
+  const [showJson, setShowJson] = React.useState(false);
+  const [indentBySpaces, setIndent] = React.useState(false);
+  const [hasHeaders, setHeaders] = React.useState(false);
+  const [error, setError] = React.useState('');
+  const textRef = useRef();
 
   const handleChange = e => {
-    setFile(e.target.files[0])
-  }
+    setFile(e.target.files[0]);
+  };
 
-  const toggleIndent = () => setIndent(prev => !prev)
-  const toggleHeaders = () => setHeaders(prev => !prev)
+  const toggleState = setter => () => setter(prev => !prev);
 
   const parseCSV = () => {
-    if (!file) return
+    if (!file) return;
 
     if (file.type !== 'text/csv' && !/\.csv$/.test(file.name)) {
       setError(
         'Only CSV files are supported. Make sure you are selecting the right file type.'
-      )
-      return
+      );
+      return;
     }
 
     parse(file, {
       error: error => {
-        console.error(error)
-        setError(error.message)
+        console.error(error);
+        setError(error.message);
       },
       complete: result => {
-        const data = hasHeaders ? result.data.slice(1) : result.data
-        const grouped = groupTabularData(data)
-        const indented = indentData(grouped, indentBySpaces ? '    ' : '\t')
-        setDisplay(indented)
-        setError('')
+        const data = hasHeaders ? result.data.slice(1) : result.data;
+        const grouped = groupTabularData(data);
+        const indented = indentData(grouped, indentBySpaces ? '    ' : '\t');
+        setDisplay(indented);
+        setJson(JSON.stringify(grouped, null, '\t'));
+        setError('');
       },
-    })
-  }
+    });
+  };
 
   const copyToClipboard = () => {
-    const textField = textRef.current
-    textField.select()
-    document.execCommand('copy')
-  }
+    const textField = textRef.current;
+    textField.select();
+    document.execCommand('copy');
+  };
 
   return (
     <Container style={{ padding: '40px 8px' }}>
@@ -149,7 +151,12 @@ const Parser = ({ classes }) => {
         </Grid>
         <Grid item style={{ textAlign: 'center' }}>
           <FormControlLabel
-            control={<Checkbox checked={hasHeaders} onChange={toggleHeaders} />}
+            control={
+              <Checkbox
+                checked={hasHeaders}
+                onChange={toggleState(setHeaders)}
+              />
+            }
             label="My csv file has headers"
           />
           <Typography variant="body2" component="div">
@@ -183,7 +190,10 @@ const Parser = ({ classes }) => {
         <Grid item>
           <FormControlLabel
             control={
-              <Switch checked={indentBySpaces} onChange={toggleIndent} />
+              <Switch
+                checked={indentBySpaces}
+                onChange={toggleState(setIndent)}
+              />
             }
             label="Indent by 4 spaces"
           />
@@ -227,6 +237,21 @@ const Parser = ({ classes }) => {
             </Typography>
           </Grid>
         )}
+        <Grid item>
+          <Typography component="div">
+            <Grid component="label" container alignItems="center" spacing={1}>
+              <Grid item>Indented Text</Grid>
+              <Grid item>
+                <Switch
+                  checked={showJson}
+                  onChange={toggleState(setShowJson)}
+                  color="default"
+                />
+              </Grid>
+              <Grid item>JSON</Grid>
+            </Grid>
+          </Typography>
+        </Grid>
         <Grid item className={classes.outputContainer}>
           <TextField
             id="standard-multiline-flexible"
@@ -234,7 +259,7 @@ const Parser = ({ classes }) => {
             multiline
             rowsMax="10"
             rows="4"
-            value={display}
+            value={showJson ? json : display}
             readOnly
             className={classes.output}
             margin="normal"
@@ -254,7 +279,7 @@ const Parser = ({ classes }) => {
         </Grid>
       </Grid>
     </Container>
-  )
-}
+  );
+};
 
-export default withStyles(styles)(Parser)
+export default withStyles(styles)(Parser);

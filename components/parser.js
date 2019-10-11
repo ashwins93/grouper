@@ -76,7 +76,7 @@ const Parser = ({ classes }) => {
   const parseCSV = () => {
     if (!file) return
 
-    if (file.type !== 'text/csv') {
+    if (file.type !== 'text/csv' && !/\.csv$/.test(file.name)) {
       setError(
         'Only CSV files are supported. Make sure you are selecting the right file type.'
       )

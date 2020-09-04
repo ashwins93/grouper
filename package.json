@@ -24,7 +24,7 @@
     "@material-ui/core": "^4.5.0",
     "@material-ui/icons": "^4.4.3",
     "next": "^9.0.8",
-    "papaparse": "^5.1.0",
+    "papaparse": "^5.2.0",
     "react": "^16.10.2",
     "react-dom": "^16.10.2"
   }
